@@ -1,0 +1,21 @@
+services:
+  db:
+    image: postgres:16
+    container_name: pbb_postgres
+    environment:
+      POSTGRES_USER: forge
+      POSTGRES_PASSWORD: forge
+      POSTGRES_DB: freelanceforge
+    ports:
+      - "5433:5432"          # host 5433 -> container 5432 (avoids clashing with a local Postgres on 5432)
+    volumes:
+      - pbb_data:/var/lib/postgresql/data
+      - .:/repo               # the whole repo is visible inside the container at /repo
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U forge -d freelanceforge"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  pbb_data:

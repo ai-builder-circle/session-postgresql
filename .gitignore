@@ -1,0 +1,3 @@
+# nothing to ignore yet — data lives in the Docker volume, not the repo
+*.log
+.DS_Store
